@@ -39,11 +39,15 @@ class DeductorParser:
         script = document.getElementsByTagName('Script')[0]
         SubNodes = script.getElementsByTagName('SubNodes')[0]
         NodeCount = int(SubNodes.getElementsByTagName('Count')[0].childNodes[0].nodeValue)
-        docs_lst = [SubNodes.getElementsByTagName(f'I_{i}')[0] for i in range(NodeCount)]
         docs = {}
-        for el in docs_lst:
-            name = el.getElementsByTagName('DisplayName')[0].childNodes[0].nodeValue
-            docs[name] = el
+        # docs_lst = [SubNodes.getElementsByTagName(f'I_{i}')[0] for i in range(NodeCount)]
+        for i in range(NodeCount):
+            el_list = SubNodes.getElementsByTagName(f'I_{i}')
+            for el in el_list:
+                if el.parentNode == SubNodes:
+                    name = el.getElementsByTagName('DisplayName')[0].childNodes[0].nodeValue
+                    docs[name] = el
+                    break
         self.docs_xml = docs
 
     def getdocumentsxml(self, load=True):
